@@ -33,6 +33,11 @@
             box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.6);
         }
 
+        #image3.visible {
+        width: 1600px; /* Larger width for image3 */
+        height: auto; /* Maintain aspect ratio */
+    }
+
         .buttons-container {
             display: flex;
             flex-direction: column;
@@ -73,8 +78,8 @@
         <!-- Cover Image and Hidden Images -->
         <img class="image visible" id="coverImage" src="coverpage.png" alt="Cover Image">
         <img class="image" id="image1" src="nov13.png" alt="Nov13">
-        <img class="image" id="image2" src="nov14.png" alt="Nov14">
-        <img class="image" id="image3" src="image3.png" alt="Image 3">
+        <img class="image" id="image2" src="14nov.png" alt="Nov14">
+        <img class="image" id="image3" src="birthdayentry.png" alt="nov20">
         
         <div class="buttons-container">
             <button class="half-circle-button" onclick="handleClick(this, 'coverImage')">Cover Page</button>
@@ -84,19 +89,49 @@
         </div>
     </div>
 
+    <!-- Audio for page flip -->
+    <audio id="pageSound" src="page.mp3"></audio>
+
+    <!-- Audio for image3 -->
+    <audio id="image3Sound" src="bebecryy.mp3"></audio>
+
     <script>
         function handleClick(button, imageId) {
+            // Stop and reset the image3 audio when switching to another image
+            const image3Sound = document.getElementById('image3Sound');
+            if (image3Sound) {
+                image3Sound.pause(); // Stop the audio
+                image3Sound.currentTime = 0; // Reset playback position
+            }
+
+            // Play the page sound for every click
+            const pageSound = document.getElementById('pageSound');
+            if (pageSound) {
+                pageSound.currentTime = 0; // Reset playback position
+                pageSound.play(); // Play the page audio
+            }
+
             // Manage button appearance
             const buttons = document.querySelectorAll('.half-circle-button');
             buttons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
 
-            // Toggle images
+            // Toggle images visibility
             const images = document.querySelectorAll('.image');
             images.forEach(img => img.classList.remove('visible'));
-            document.getElementById(imageId).classList.add('visible');
+            const image = document.getElementById(imageId);
+            if (image) {
+                image.classList.add('visible');
+            }
+
+            // Play the second audio only when image3 is displayed
+            if (imageId === 'image3') {
+                if (image3Sound) {
+                    image3Sound.currentTime = 0; // Reset playback position
+                    image3Sound.play(); // Play the image3 specific audio
+                }
+            }
         }
     </script>
 
 </body>
-</html>
