@@ -6,96 +6,97 @@
     <link rel="icon" type="image/jpg" href="happysack.jpg">
     <title>Oakley's Diary !!</title>
     <style>
-        /* Add three background images to the body */
         body {
-            background-image: 
-                url('woodendesk.jpg'),  /* Wood texture */
-                url('coverpage.png');    /* Cover image */
-            background-position: 
-                center center,          /* Position for the wood texture */
-                center center;          /* Position for the cover image */
-            background-repeat: 
-                repeat,                 /* Repeat the wood texture */
-                no-repeat;             /* Don't repeat the cover image */
-            background-size: 
-                cover,                  /* Make the wood texture cover the whole screen */
-                contain;                /* Make the cover image fit within the screen */
+            background-image: url('woodendesk.jpg'); /* Wood texture */
+            background-position: center center; /* Center the texture */
+            background-repeat: repeat; /* Repeat the texture */
+            background-size: cover; /* Cover the entire screen */
         }
 
-   /* Container to hold the image and buttons side by side */
-   .container {
-            display: flex; /* Align children in a row (image on left, buttons on right) */
-            align-items: flex-start; /* Align items at the top */
-            justify-content: flex-start; /* Align content to the left */
-            gap: -5px; /* Reduce space between image and buttons */
+        .container {
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            margin-left: 50px;
+            gap: 10px;
         }
 
-        /* Styling for the image */
         .image {
-            width: 850px; /* Set image width larger */
-            height: auto; /* Maintain aspect ratio */
-            box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.6); /* Apply a drop shadow */
-            margin-left: 30px;
+            display: none; /* Initially hidden */
+            width: 800px;
+            height: auto;
+            box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.6);
         }
 
-        /* Container for the buttons */
+        .image.visible {
+            display: block; /* Display only when active */
+            box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.6);
+        }
+
         .buttons-container {
-            display: flex; /* Using flexbox for vertical arrangement */
-            flex-direction: column; /* Stack buttons vertically */
-            gap: 30px; /* Reduced gap between buttons */
-            margin-top: 30px; /* Move buttons closer vertically */
-            margin-left: 0.25px; /* Added margin to move buttons closer to the image */
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 5px;
+            
         }
 
-        /* Styling for the half-circle buttons */
         .half-circle-button {
-            background-color: pink; /* Pink background */
-            color: white; /* White text */
-            border: none; /* Remove border */
-            padding: 10px 20px; /* Add padding to button */
-            text-align: center; /* Center the text inside */
-            text-decoration: none; /* Remove underline */
-            font-size: 16px; /* Set font size */
-            cursor: pointer; /* Pointer cursor on hover */
-            width: 100px; /* Set width */
-            height: 50px; /* Set height */
-            border-radius: 50px 50px 0 0; /* Rounded top corners for half-circle shape */
-            transition: background-color 0.3s; /* Smooth background color change on hover */
-            transform: rotate(90deg); /* Rotate the button to make it sideways */
-            box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.6); /* Apply a drop shadow */
+            background-color: pink;
+            color: white;
+            border: none;
+            padding: 60px 10px;
+            text-align: center;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100px;
+            height: 50px;
+            border-radius: 50px 50px 0 0;
+            transform: rotate(90deg);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.6);
         }
 
-        /* Button hover effect */
         .half-circle-button:hover {
-            background-color: rgb(255, 149, 166); /* Darker pink on hover */
+            background-color: rgb(255, 149, 166);
         }
 
+        .half-circle-button.active {
+            transform: rotate(90deg) translateY(-10px);
+            background-color: rgb(255, 149, 166);
+        }
     </style>
 </head>
 <body>
 
-    <!-- Create a container to hold the image and buttons -->
     <div class="container">
-        <!-- The image -->
-        <img class="image" src="coverpage.png" alt="Cover Image">
+        <!-- Cover Image and Hidden Images -->
+        <img class="image visible" id="coverImage" src="coverpage.png" alt="Cover Image">
+        <img class="image" id="image1" src="nov13.png" alt="Nov13">
+        <img class="image" id="image2" src="nov14.png" alt="Nov14">
+        <img class="image" id="image3" src="image3.png" alt="Image 3">
         
-        <!-- Container for vertical buttons -->
         <div class="buttons-container">
-            <button class="half-circle-button">date</button>
-            <button class="half-circle-button">date</button>
-            <button class="half-circle-button">date</button>            
-            <button class="half-circle-button">date</button>
-            <button class="half-circle-button">date</button>
-            <button class="half-circle-button">date</button>
-            <button class="half-circle-button">date</button>
-            <button class="half-circle-button">date</button>
-            <button class="half-circle-button">date</button>
-            <button class="half-circle-button">date</button>            
-            <button class="half-circle-button">date</button>
-            <button class="half-circle-button">date</button>
-            <button class="half-circle-button">date</button>
+            <button class="half-circle-button" onclick="handleClick(this, 'coverImage')">Cover Page</button>
+            <button class="half-circle-button" onclick="handleClick(this, 'image1')">November 13th</button>
+            <button class="half-circle-button" onclick="handleClick(this, 'image2')">November 14th</button>
+            <button class="half-circle-button" onclick="handleClick(this, 'image3')">Image 3</button>
         </div>
     </div>
+
+    <script>
+        function handleClick(button, imageId) {
+            // Manage button appearance
+            const buttons = document.querySelectorAll('.half-circle-button');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
+            // Toggle images
+            const images = document.querySelectorAll('.image');
+            images.forEach(img => img.classList.remove('visible'));
+            document.getElementById(imageId).classList.add('visible');
+        }
+    </script>
 
 </body>
 </html>
