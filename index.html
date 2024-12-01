@@ -100,6 +100,9 @@
     <audio id="image3Sound" src="bebecryy.mp3"></audio>
 
     <script>
+        // Flag to track whether the alert has been dismissed
+        let alertDismissed = false;
+
         function handleClick(button, imageId) {
             // Stop and reset the image3 audio when switching to another image
             const image3Sound = document.getElementById('image3Sound');
@@ -107,19 +110,19 @@
                 image3Sound.pause(); // Stop the audio
                 image3Sound.currentTime = 0; // Reset playback position
             }
-    
+
             // Play the page sound for every click
             const pageSound = document.getElementById('pageSound');
             if (pageSound) {
                 pageSound.currentTime = 0; // Reset playback position
                 pageSound.play(); // Play the page audio
             }
-    
+
             // Manage button appearance
             const buttons = document.querySelectorAll('.half-circle-button');
             buttons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
-    
+
             // Toggle images visibility
             const images = document.querySelectorAll('.image');
             images.forEach(img => img.classList.remove('visible'));
@@ -127,14 +130,14 @@
             if (image) {
                 image.classList.add('visible');
             }
-    
+
             // Handle specific behavior for image3
             if (imageId === 'image3') {
                 if (image3Sound) {
                     image3Sound.currentTime = 0; // Reset playback position
                     image3Sound.play(); // Play the image3 specific audio
                 }
-    
+
                 // Ensure #newButton exists when image3 is displayed
                 const buttonsContainer = document.getElementById('buttonsContainer');
                 if (!document.getElementById('newButton')) {
@@ -144,7 +147,9 @@
                     newButton.innerText = 'Whats wrong buttercup?';
                     newButton.onclick = () => {
                         // Only show the alert when #newButton is clicked
-                        alert('I think its time for a new journal..give the cover another look...');
+                        alert('I think its time for a new journal..give the cover another click...');
+                        // After the alert is dismissed, allow the cover image to change
+                        alertDismissed = true;
                     };
                     buttonsContainer.appendChild(newButton);
                 }
@@ -155,15 +160,13 @@
                     newButton.remove();
                 }
             }
-    
+
             // Handle specific behavior for the cover image button
-            if (imageId === 'coverImage') {
-                // Do NOT trigger the alert here (we only want it triggered by #newButton)
-                
-                // After the alert from #newButton, change the cover image to happysack.jpg and make it a link
+            if (imageId === 'coverImage' && alertDismissed) {
+                // Only change the cover page image if the alert has been dismissed
                 const coverImage = document.getElementById('coverImage');
                 if (coverImage) {
-                    // Create a link and change the cover image to happysack.jpg
+                    // Create a link and change the cover image to compt.png
                     const container = coverImage.parentElement;
                     const link = document.createElement('a');
                     link.href = './journal.html'; // The link to the new page
@@ -176,5 +179,6 @@
             }
         }
     </script>
-    
+
 </body>
+
