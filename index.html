@@ -94,10 +94,6 @@
 </head>
 <body>
 
-    <!-- Corner Cover Image Link -->
-    <a href="https://dootles.github.io/Diary/" target="_blank" class="corner-link">
-        <img src="coverImage.png" alt="Go to Diary">
-    </a>
 
     <div class="container">
         <!-- Cover Image and Hidden Images -->
@@ -121,8 +117,29 @@
     <audio id="image3Sound" src="bebecryy.mp3"></audio>
 
     <script>
-        // Your existing JavaScript logic remains here...
+        // Handle button click
+        function handleClick(button, imageId) {
+            // Hide all images first
+            const images = document.querySelectorAll('.image');
+            images.forEach(image => image.classList.remove('visible'));
+            
+            // Show the selected image
+            const selectedImage = document.getElementById(imageId);
+            selectedImage.classList.add('visible');
+            
+            // Optionally add an "active" class to the clicked button for styling
+            const buttons = document.querySelectorAll('.half-circle-button');
+            buttons.forEach(btn => btn.classList.remove('active')); // Remove 'active' class from all buttons
+            button.classList.add('active'); // Add 'active' class to clicked button
+            
+            // Optionally, play page flip sound or any other logic
+            if (imageId === 'image3') {
+                document.getElementById('image3Sound').play(); // Play specific sound for image3
+            } else {
+                document.getElementById('pageSound').play(); // Play general page flip sound
+            }
+        }
     </script>
-
+    
 </body>
 </html>
