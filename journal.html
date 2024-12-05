@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/jpg" href="wiletd.jpg">
+    <title>Oakley's Journal</title>
+    <style>
+        body {
+            background-image: url('woodendesk.jpg'); /* Wood texture */
+            background-position: center center; /* Center the texture */
+            background-repeat: repeat; /* Repeat the texture */
+            background-size: cover; /* Cover the entire screen */
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 10px; /* Adjust gap between images and buttons */
+        }
+
+        .image {
+            display: none; /* Initially hidden */
+            width: 800px; /* Default size */
+            height: auto;
+            box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.6);
+        }
+
+        #image1, #image2 {
+            width: 1600px; /* Adjusted size for specific images */
+        }
+
+        .image.visible {
+            display: block; /* Show only when visible class is applied */
+            box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.6);
+        }
+
+        .buttons-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px; /* Space between buttons */
+            align-items: flex-start; /* Align buttons next to the images */
+        }
+
+        .half-circle-button {
+            background-color: grey;
+            color: white;
+            border: none;
+            padding: 60px 10px;
+            text-align: center;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100px;
+            height: 50px;
+            border-radius: 50px 50px 0 0;
+            transform: rotate(90deg); /* Rotate the button */
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.6);
+        }
+
+        .half-circle-button:hover {
+            background-color: rgb(255, 149, 166);
+        }
+
+        .half-circle-button.active {
+            transform: rotate(90deg) translateY(-10px);
+            background-color: rgb(58, 58, 58);
+        }
+
+        #newButton {
+            background-color: grey;
+            color: black;
+        }
+
+        /* Position the corner link in the bottom-right */
+        .corner-link {
+            position: fixed;
+            bottom: 20px;  /* Move it to the bottom */
+            right: 20px;   /* Keep it aligned to the right */
+            width: 100px;
+            height: auto;
+            z-index: 1000;
+        }
+
+        .corner-link img {
+            width: 100%;  /* Scale the image to fit within the container */
+            height: auto;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+            border-radius: 5px;
+        }
+
+        .happysack-link {
+            display: none; /* Hidden initially */
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .happysack-link img {
+            width: 200px; /* Adjust image size */
+            height: auto;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Cover Image and Hidden Images -->
+        <div>
+            <a href="https://dootles.github.io/Diary/" target="_blank" id="coverImageLink">
+                <img class="image visible" id="coverImage" src="compt.png" alt="Cover Image">
+            </a>
+            <img class="image" id="image1" src="1.png" alt="March to April">
+            <img class="image" id="image2" src="2.png" alt="April to May">
+        </div>
+        <div class="buttons-container" id="buttonsContainer">
+            <button class="half-circle-button" onclick="handleClick(this, 'coverImage')">Cover</button>
+            <button class="half-circle-button" onclick="handleClick(this, 'image1')">March/April</button>
+            <button class="half-circle-button" onclick="handleClick(this, 'image2')">April/May</button>
+        </div>
+    </div>
+
+    <!-- Audio for page flip -->
+    <audio id="pageSound" src="page.mp3"></audio>
+
+    <script>
+        let alertShown = false; // Tracks if the alert has been shown
+
+        function handleClick(button, imageId) {
+            const pageSound = document.getElementById('pageSound');
+            if (pageSound) {
+                pageSound.currentTime = 0;
+                pageSound.play();
+            }
+
+            // Remove 'active' from all buttons and add it to the clicked button
+            const buttons = document.querySelectorAll('.half-circle-button');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
+            // Hide all images, then show the one with the matching ID
+            const images = document.querySelectorAll('.image');
+            images.forEach(img => img.classList.remove('visible')); // Hide all images
+            const image = document.getElementById(imageId);
+            if (image) {
+                image.classList.add('visible'); // Show the selected image
+            }
+
+            // Create the new button if not already added
+            const buttonsContainer = document.getElementById('buttonsContainer');
+            if (!document.getElementById('newButton')) {
+                const newButton = document.createElement('button');
+                newButton.id = 'newButton';
+                newButton.className = 'half-circle-button';
+                newButton.innerText = '...';
+                newButton.onclick = () => {
+                    if (!alertShown) {
+                        alert('I think it’s time for a new journal..give the cover another click...');
+                        alertShown = true;
+                        const coverImage = document.getElementById('coverImage');
+                        const coverImageLink = document.getElementById('coverImageLink');
+                        
+                        // Replace the cover image with a link to happysack.jpg
+                        if (coverImage) {
+                            coverImage.src = 'happysack.jpg'; // Change the cover image
+                            coverImage.alt = 'Happy Sack Image';
+                        }
+
+                        // Wrap the new cover image in a clickable link again
+                        coverImageLink.href = './diary.html'; // Update to the new destination
+                    }
+                };
+                buttonsContainer.appendChild(newButton);
+            }
+        }
+    </script>
+</body>
+</html>
