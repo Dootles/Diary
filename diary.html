@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/jpg" href="happysack.jpg">
-    <title>Oakley's Diary !!</title>
+    <title>Oakley's Diary</title>
     <style>
         body {
             background-image: url('woodendesk.jpg'); /* Wood texture */
@@ -34,15 +34,16 @@
         }
 
         #image3.visible {
-            width: 1600px; /* Larger width for image3 */
-            height: auto; /* Maintain aspect ratio */
-        }
+        width: 1600px; /* Larger width for image3 */
+        height: auto; /* Maintain aspect ratio */
+    }
 
         .buttons-container {
             display: flex;
             flex-direction: column;
             gap: 10px;
             margin-top: 5px;
+            
         }
 
         .half-circle-button {
@@ -69,60 +70,12 @@
             transform: rotate(90deg) translateY(-10px);
             background-color: rgb(255, 149, 166);
         }
-
         #newButton {
             background-color: grey;
-            color: black;
-        }
-
-        .corner-link {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            width: 100px;
-            height: auto;
-            z-index: 1000;
-        }
-
-        .corner-link img {
-            width: 100%;
-            height: auto;
-            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
-            border-radius: 5px;
+            color:black
         }
     </style>
 </head>
 <body>
-
-    <!-- Corner Cover Image Link -->
-    <a href="https://dootles.github.io/Diary/" target="_blank" class="corner-link">
-        <img src="coverImage.png" alt="Go to Diary">
-    </a>
-
-    <div class="container">
-        <!-- Cover Image and Hidden Images -->
-        <img class="image visible" id="coverImage" src="coverpage.png" alt="Cover Image">
-        <img class="image" id="image1" src="nov13.png" alt="Nov13">
-        <img class="image" id="image2" src="14nov.png" alt="Nov14">
-        <img class="image" id="image3" src="birthdayentry.png" alt="nov20">
-        
-        <div class="buttons-container" id="buttonsContainer">
-            <button class="half-circle-button" onclick="handleClick(this, 'coverImage')">Cover Page</button>
-            <button class="half-circle-button" onclick="handleClick(this, 'image1')">November 13th</button>
-            <button class="half-circle-button" onclick="handleClick(this, 'image2')">November 14th</button>
-            <button class="half-circle-button" onclick="handleClick(this, 'image3')">My Birthday!!</button>
-        </div>
-    </div>
-
-    <!-- Audio for page flip -->
-    <audio id="pageSound" src="page.mp3"></audio>
-
-    <!-- Audio for image3 -->
-    <audio id="image3Sound" src="bebecryy.mp3"></audio>
-
-    <script>
-        // Your existing JavaScript logic remains here...
-    </script>
-
+    
 </body>
-</html>
