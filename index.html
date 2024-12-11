@@ -13,7 +13,6 @@
             background-size: cover; /* Cover the entire screen */
         }
 
-
         .container {
             display: flex;
             align-items: flex-start;
@@ -22,38 +21,32 @@
             gap: 10px;
         }
 
-
         .image {
             display: none; /* Initially hidden */
-            width: 800px;
+            width: 1600px;
             height: auto;
             box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.6);
         }
-
 
         .image.visible {
             display: block; /* Display only when active */
             box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.6);
         }
 
-
-        #image3.visible {
-        width: 1600px; /* Larger width for image3 */
-        height: auto; /* Maintain aspect ratio */
-    }
-
+        #coverImage.visible {
+            width: 800px; /* Larger width for image3 */
+            height: auto; /* Maintain aspect ratio */
+        }
 
         .buttons-container {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 2px;
             margin-top: 5px;
-           
         }
 
-
         .half-circle-button {
-            background-color: pink;
+            background-color: rgb(68, 68, 68);
             color: white;
             border: none;
             padding: 60px 10px;
@@ -68,62 +61,53 @@
             box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.6);
         }
 
-
         .half-circle-button:hover {
-            background-color: rgb(255, 149, 166);
+            background-color: rgb(85, 85, 85);
         }
-
 
         .half-circle-button.active {
             transform: rotate(90deg) translateY(-10px);
-            background-color: rgb(255, 149, 166);
-        }
-        #newButton {
-            background-color: grey;
-            color:black
+            background-color: rgb(83, 83, 83);
         }
     </style>
 </head>
 <body>
 
-
     <div class="container">
         <!-- Cover Image and Hidden Images -->
-        <img class="image visible" id="coverImage" src="coverpage.png" alt="Cover Image">
-        <img class="image" id="image1" src="nov13.png" alt="Nov13">
-        <img class="image" id="image2" src="14nov.png" alt="Nov14">
-        <img class="image" id="image3" src="birthdayentry.png" alt="nov20">
-       
+        <img class="image visible" id="coverImage" src="cover-page.png" alt="Cover Image">
+        <img class="image" id="image1" src="june-3rd.png" alt="image">
+        <img class="image" id="image2" src="june-7th.png" alt="image">
+        <img class="image" id="image3" src="june-13.png" alt="image">
+        <img class="image" id="image4" src="june-13-cont.png" alt="image">
+        <img class="image" id="image5" src="june-24.png" alt="image">
+        <img class="image" id="image6" src="june-27.png" alt="image">
+        <img class="image" id="image7" src="july-3.png" alt="image">
+        <img class="image" id="image8" src="july-6.png" alt="image">
+
         <div class="buttons-container" id="buttonsContainer">
             <button class="half-circle-button" onclick="handleClick(this, 'coverImage')">Cover Page</button>
-            <button class="half-circle-button" onclick="handleClick(this, 'image1')">November 13th</button>
-            <button class="half-circle-button" onclick="handleClick(this, 'image2')">November 14th</button>
-            <button class="half-circle-button" onclick="handleClick(this, 'image3')">My Birthday !!</button>
+            <button class="half-circle-button" onclick="handleClick(this, 'image1')">June 3rd</button>
+            <button class="half-circle-button" onclick="handleClick(this, 'image2')">June 7th</button>
+            <button class="half-circle-button" onclick="handleClick(this, 'image3')">June 13th</button>
+            <button class="half-circle-button" onclick="handleClick(this, 'image4')">June 13th-cont</button>
+            <button class="half-circle-button" onclick="handleClick(this, 'image5')">June 24th</button>
+            <button class="half-circle-button" onclick="handleClick(this, 'image6')">June 27th</button>
+            <button class="half-circle-button" onclick="handleClick(this, 'image7')">July 3rd</button>
+            <button class="half-circle-button" onclick="handleClick(this, 'image8')">July 7th</button>
         </div>
     </div>
 
-
     <!-- Audio for page flip -->
     <audio id="pageSound" src="page.mp3"></audio>
-
-
-    <!-- Audio for image3 -->
-    <audio id="image3Sound" src="bebecryy.mp3"></audio>
 
 
     <script>
         // Flag to track whether the alert has been dismissed
         let alertDismissed = false;
 
-
         function handleClick(button, imageId) {
-            // Stop and reset the image3 audio when switching to another image
-            const image3Sound = document.getElementById('image3Sound');
-            if (image3Sound) {
-                image3Sound.pause(); // Stop the audio
-                image3Sound.currentTime = 0; // Reset playback position
-            }
-
+         
 
             // Play the page sound for every click
             const pageSound = document.getElementById('pageSound');
@@ -132,12 +116,10 @@
                 pageSound.play(); // Play the page audio
             }
 
-
             // Manage button appearance
             const buttons = document.querySelectorAll('.half-circle-button');
             buttons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
-
 
             // Toggle images visibility
             const images = document.querySelectorAll('.image');
@@ -147,37 +129,6 @@
                 image.classList.add('visible');
             }
 
-
-            // Handle specific behavior for image3
-            if (imageId === 'image3') {
-                if (image3Sound) {
-                    image3Sound.currentTime = 0; // Reset playback position
-                    image3Sound.play(); // Play the image3 specific audio
-                }
-
-
-                // Ensure #newButton exists when image3 is displayed
-                const buttonsContainer = document.getElementById('buttonsContainer');
-                if (!document.getElementById('newButton')) {
-                    const newButton = document.createElement('button');
-                    newButton.id = 'newButton';
-                    newButton.className = 'half-circle-button';
-                    newButton.innerText = '...';
-                    newButton.onclick = () => {
-                        // Only show the alert when #newButton is clicked
-                        alert('I think its time for a new journal..give the cover another click...');
-                        // After the alert is dismissed, allow the cover image to change
-                        alertDismissed = true;
-                    };
-                    buttonsContainer.appendChild(newButton);
-                }
-            } else {
-                // Remove the #newButton if it exists when switching to other images
-                const newButton = document.getElementById('newButton');
-                if (newButton) {
-                    newButton.remove();
-                }
-            }
 
 
             // Handle specific behavior for the cover image button
@@ -191,13 +142,12 @@
                     link.href = './journal.html'; // The link to the new page
                     link.target = '_blank'; // Open in a new tab
                     link.innerHTML = '<img src="compt.png" alt="Journal" class="image visible" id="coverImage">'; // New cover image
-                   
+
                     // Replace the current cover image with the new linked image
                     container.replaceChild(link, coverImage);
                 }
             }
         }
     </script>
-
 
 </body>
